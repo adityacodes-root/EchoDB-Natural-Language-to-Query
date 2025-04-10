@@ -2,12 +2,9 @@
 
 This project is a Next.js application that allows users to query a PostgreSQL database using natural language and visualize the results. It's powered by the AI SDK by Vercel and uses OpenAI's GPT-4o model to translate natural language queries into SQL.
 
-![image](https://github.com/user-attachments/assets/9011b831-b9b7-429f-acf3-2d5a26acad82)
+![image](https://github.com/user-attachments/assets/644ce57c-5239-483e-b759-b7af60ee2561)
 
 
-## Demo
-
-![Demo Video](https://via.placeholder.com/1200x600?text=Demo+Video)
 
 ## Screenshots
 
