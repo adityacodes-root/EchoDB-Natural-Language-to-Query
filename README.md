@@ -2,7 +2,8 @@
 
 This project is a Next.js application that allows users to query a PostgreSQL database using natural language and visualize the results. It's powered by the AI SDK by Vercel and uses OpenAI's GPT-4o model to translate natural language queries into SQL.
 
-![EchoDB Screenshot](https://via.placeholder.com/1200x600?text=EchoDB+Screenshot)
+![image](https://github.com/user-attachments/assets/9011b831-b9b7-429f-acf3-2d5a26acad82)
+
 
 ## Demo
 
@@ -11,19 +12,21 @@ This project is a Next.js application that allows users to query a PostgreSQL da
 ## Screenshots
 
 ### Home Page with Categorized Recommendations
-![Home Page](https://via.placeholder.com/800x450?text=Home+Page+with+Categorized+Recommendations)
+![image](https://github.com/user-attachments/assets/7573f9a3-1850-43eb-ac9f-fe77a4dfe30a)
+
 
 ### Query Results with Selected Columns
-![Query Results](https://via.placeholder.com/800x450?text=Query+Results+with+Selected+Columns)
+![image](https://github.com/user-attachments/assets/7c270707-fb62-4eb3-ab3c-6e8285303471)
+
 
 ### CRUD Operation Feedback
-![CRUD Operations](https://via.placeholder.com/800x450?text=CRUD+Operation+Feedback)
-
-### Dark Mode
-![Dark Mode](https://via.placeholder.com/800x450?text=Dark+Mode)
+![image](https://github.com/user-attachments/assets/3d6fa99f-dc0d-4894-922f-c5c237aecfc1)
+![image](https://github.com/user-attachments/assets/f500bb54-d850-4c2f-8c28-71884480b6a9)
+![image](https://github.com/user-attachments/assets/b87d044c-186c-47a4-8abb-16534e6495c4)
 
 ### Chart Visualization
-![Chart Visualization](https://via.placeholder.com/800x450?text=Chart+Visualization)
+![image](https://github.com/user-attachments/assets/0b33b2c2-ee05-4603-9c9c-22631bd72387)
+
 
 ## Acknowledgments
 
