@@ -2,27 +2,31 @@
 
 This project is a Next.js application that allows users to query a PostgreSQL database using natural language and visualize the results. It's powered by the AI SDK by Vercel and uses OpenAI's GPT-4o model to translate natural language queries into SQL.
 
-![EchoDB Screenshot](https://via.placeholder.com/1200x600?text=EchoDB+Screenshot)
+![Screenshot_01-May_01-14-07_32056](https://github.com/user-attachments/assets/ee921f10-02b2-4dcf-99d2-076a044c30d7)
+
 
 ## Screenshots
 
 ### Home Page with Categorized Recommendations
-![Home Page](https://via.placeholder.com/800x450?text=Home+Page+with+Categorized+Recommendations)
+![swappy-20250410-212233](https://github.com/user-attachments/assets/1cfdf879-026c-4252-8af6-487e0425fad3)
 
 ### Query Results with Selected Columns
-![Query Results](https://via.placeholder.com/800x450?text=Query+Results+with+Selected+Columns)
+![Screenshot_01-May_01-26-37_15104](https://github.com/user-attachments/assets/5ab2ed23-622d-4961-ae37-e4efc6d77731)
 
 ### CRUD Operation Feedback
-![CRUD Operations](https://via.placeholder.com/800x450?text=CRUD+Operation+Feedback)
+![Screenshot_01-May_01-32-49_8556](https://github.com/user-attachments/assets/ce539025-38bd-46b5-8ed9-e726a951b37e)
+![Screenshot_01-May_01-33-41_19703](https://github.com/user-attachments/assets/9b28b32a-2fb5-4f84-8d85-5c157d9166e3)
 
-### Dark Mode
-![Dark Mode](https://via.placeholder.com/800x450?text=Dark+Mode)
+### Light Mode
+![Screenshot_01-May_01-34-45_23151](https://github.com/user-attachments/assets/e4972200-d163-419b-a113-0fc5d8c4d84a)
 
 ### Chatbot Interface
-![Chatbot Interface](https://via.placeholder.com/800x450?text=Chatbot+Interface)
+![Screenshot_01-May_01-35-47_22050](https://github.com/user-attachments/assets/493b9923-4d0b-4ef9-ba45-4f6a03878b2b)
+![Screenshot_01-May_01-37-39_19915](https://github.com/user-attachments/assets/656d4fcb-a9eb-49c9-9bbf-41c6c40197e4)
 
 ### Chart Visualization
-![Chart Visualization](https://via.placeholder.com/800x450?text=Chart+Visualization)
+![Screenshot_01-May_01-40-42_31515](https://github.com/user-attachments/assets/6853b13b-a559-4978-9e64-3ab5e77737b3)
+
 
 ## Acknowledgments
 
