@@ -106,7 +106,7 @@ export function Results({ results, chartConfig, columns }: ResultsProps) {
       {viewMode === 'chart' && chartConfig ? (
         <div className="bg-white dark:bg-neutral-800 rounded-xl p-6 shadow-sm">
           <DynamicChart chartData={results} chartConfig={chartConfig} />
-        </div>
+          </div>
       ) : (
         <div className="overflow-x-auto rounded-xl border border-neutral-200 dark:border-neutral-700">
           <table className="min-w-full divide-y divide-neutral-200 dark:divide-neutral-700">
@@ -140,7 +140,7 @@ export function Results({ results, chartConfig, columns }: ResultsProps) {
               ))}
             </tbody>
           </table>
-        </div>
+    </div>
       )}
     </motion.div>
   );

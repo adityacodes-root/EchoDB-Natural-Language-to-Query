@@ -4,10 +4,6 @@ This project is a Next.js application that allows users to query a PostgreSQL da
 
 ![EchoDB Screenshot](https://via.placeholder.com/1200x600?text=EchoDB+Screenshot)
 
-## Demo
-
-![Demo Video](https://via.placeholder.com/1200x600?text=Demo+Video)
-
 ## Screenshots
 
 ### Home Page with Categorized Recommendations
@@ -21,6 +17,9 @@ This project is a Next.js application that allows users to query a PostgreSQL da
 
 ### Dark Mode
 ![Dark Mode](https://via.placeholder.com/800x450?text=Dark+Mode)
+
+### Chatbot Interface
+![Chatbot Interface](https://via.placeholder.com/800x450?text=Chatbot+Interface)
 
 ### Chart Visualization
 ![Chart Visualization](https://via.placeholder.com/800x450?text=Chart+Visualization)
@@ -53,6 +52,7 @@ This project is based on the [Natural Language PostgreSQL](https://github.com/ve
 ## Features
 
 - **Natural Language to SQL**: Users can input queries in plain English or any other language, which are then converted to SQL using AI.
+- **AI-Powered Chatbot**: Interactive chatbot interface for natural language database queries and assistance
 - **Full CRUD Operations**: Support for INSERT, UPDATE, and DELETE operations through natural language with visual feedback.
 - **Data Visualization**: Results are displayed in both table and chart formats, with the chart type automatically selected based on the data.
 - **Query Explanation**: Users can view the full SQL query and get an AI-generated explanation of each part of the query.

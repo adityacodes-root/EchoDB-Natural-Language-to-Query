@@ -7,11 +7,18 @@ import { generateObject } from "ai";
 import { z } from "zod";
 import { query, executeQuery } from "@/lib/db";
 
+/**
+ * Converts natural language input to SQL query using GPT-4
+ * @param input - Natural language query from user
+ * @returns Generated SQL query as string
+ */
 export const generateQuery = async (input: string) => {
   "use server";
   try {
+    // Use GPT-4 to generate SQL query from natural language
     const result = await generateObject({
       model: openai("gpt-4o"),
+      // System prompt containing database schema and rules
       system: `You are a SQL (postgres) and data visualization expert. Your job is to help the user write SQL queries to interact with the database. The table schema is as follows:
 
       unicorns (
@@ -54,7 +61,9 @@ export const generateQuery = async (input: string) => {
 
     For SELECT queries, ensure they return quantitative data that can be plotted on a chart when appropriate. There should always be at least two columns. If the user asks for a single column, return the column and the count of the column. If the user asks for a rate, return the rate as a decimal. For example, 0.1 would be 10%.
     `,
+      // User's natural language query
       prompt: `Generate the SQL query to perform the requested operation: ${input}`,
+      // Schema validation for the response
       schema: z.object({
         query: z.string(),
       }),
@@ -66,9 +75,14 @@ export const generateQuery = async (input: string) => {
   }
 };
 
+/**
+ * Executes the generated SQL query with safety checks
+ * @param query - SQL query to execute
+ * @returns Query results or operation status
+ */
 export const runGenerateSQLQuery = async (query: string) => {
   "use server";
-  // Only restrict unsafe operations
+  // Safety check: Prevent unsafe operations
   if (
     query.trim().toLowerCase().includes("alter") ||
     query.trim().toLowerCase().includes("grant") ||
@@ -79,8 +93,10 @@ export const runGenerateSQLQuery = async (query: string) => {
 
   let data: any;
   try {
+    // Execute the query
     data = await executeQuery(query);
   } catch (e: any) {
+    // Handle table creation if needed
     if (e.message.includes('relation "unicorns" does not exist')) {
       console.log(
         "Table does not exist, creating and seeding it with dummy data now...",
@@ -91,12 +107,13 @@ export const runGenerateSQLQuery = async (query: string) => {
     }
   }
 
-  // For SELECT queries, return the rows
+  // Handle different types of operations
   if (query.trim().toLowerCase().startsWith("select")) {
+    // Return rows for SELECT queries
     return data.rows as Result[];
   }
   
-  // For other operations (INSERT, UPDATE, DELETE, CREATE TABLE), return a success message
+  // Return operation status for other queries (INSERT, UPDATE, DELETE)
   return {
     message: "Operation completed successfully",
     affectedRows: data.rowCount,
@@ -104,6 +121,12 @@ export const runGenerateSQLQuery = async (query: string) => {
   };
 };
 
+/**
+ * Explains the generated SQL query in simple terms
+ * @param input - Original natural language query
+ * @param sqlQuery - Generated SQL query
+ * @returns Structured explanation of the query
+ */
 export const explainQuery = async (input: string, sqlQuery: string) => {
   "use server";
   try {
@@ -112,6 +135,7 @@ export const explainQuery = async (input: string, sqlQuery: string) => {
       schema: z.object({
         explanations: explanationsSchema,
       }),
+      // System prompt for explanation generation
       system: `You are a SQL (postgres) expert. Your job is to explain to the user write a SQL query you wrote to retrieve the data they asked for. The table schema is as follows:
     unicorns (
       id SERIAL PRIMARY KEY,
@@ -128,6 +152,7 @@ export const explainQuery = async (input: string, sqlQuery: string) => {
     If a section doesnt have any explanation, include it, but leave the explanation empty.
 
     `,
+      // Prompt for explanation generation
       prompt: `Explain the SQL query you generated to retrieve the data the user wanted. Assume the user is not an expert in SQL. Break down the query into steps. Be concise.
 
       User Query:
@@ -143,6 +168,12 @@ export const explainQuery = async (input: string, sqlQuery: string) => {
   }
 };
 
+/**
+ * Generates chart configuration based on query results
+ * @param results - Query results to visualize
+ * @param userQuery - Original user query
+ * @returns Chart configuration with colors
+ */
 export const generateChartConfig = async (
   results: Result[],
   userQuery: string,
@@ -151,6 +182,7 @@ export const generateChartConfig = async (
   const system = `You are a data visualization expert. `;
 
   try {
+    // Generate chart configuration using GPT-4
     const { object: config } = await generateObject({
       model: openai("gpt-4o"),
       system,
@@ -178,16 +210,67 @@ export const generateChartConfig = async (
       schema: configSchema,
     });
 
+    // Generate color scheme for the chart
     const colors: Record<string, string> = {};
     config.yKeys.forEach((key, index) => {
       colors[key] = `hsl(var(--chart-${index + 1}))`;
     });
 
+    // Return complete chart configuration
     const updatedConfig: Config = { ...config, colors };
     return { config: updatedConfig };
   } catch (e) {
     // @ts-expect-errore
     console.error(e.message);
     throw new Error("Failed to generate chart suggestion");
+  }
+};
+
+/**
+ * Handles chatbot queries by combining database access with OpenAI
+ * @param question - User's question about unicorn companies
+ * @returns Generated response based on database data
+ */
+export const handleChatbotQuery = async (question: string) => {
+  "use server";
+  try {
+    // First, generate a SQL query based on the question
+    const query = await generateQuery(question);
+    if (!query) {
+      throw new Error("Failed to generate query");
+    }
+
+    // Execute the query to get actual data
+    const result = await runGenerateSQLQuery(query);
+    if (!result || (Array.isArray(result) && result.length === 0)) {
+      return "I couldn't find any data matching your question. Could you please rephrase or try a different question?";
+    }
+
+    // Use OpenAI to generate a natural language response based on the data
+    const response = await generateObject({
+      model: openai("gpt-4"),
+      system: `You are a helpful assistant that explains data about unicorn companies. 
+      You will be given a question and the corresponding data from the database.
+      Your task is to provide a clear, concise, and natural explanation of the data.
+      
+      Important notes:
+      - Valuation is in billions of dollars (e.g., 10.0 means $10B)
+  } catch (error) {
+    console.error("Error in chatbot query:", error);
+    return "I apologize, but I encountered an error while processing your question. Please try again.";
+      - When referring to countries, use full names (e.g., "United States" instead of "USA")
+      - Be specific and include relevant numbers in your response
+      - If the data shows trends or patterns, point them out
+      - Keep your response focused and to the point`,
+      prompt: `Question: ${question}\n\nData: ${JSON.stringify(result, null, 2)}`,
+      schema: z.object({
+        answer: z.string(),
+      }),
+    });
+
+    return response.object.answer;
+  } catch (error) {
+    console.error("Error in chatbot query:", error);
+    return "I apologize, but I encountered an error while processing your question. Please try again.";
   }
 };
